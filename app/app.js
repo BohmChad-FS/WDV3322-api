@@ -2,10 +2,11 @@ const express = require('express');
 const routes = require('../api/routes/routes')
 const app = express();
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 app.use(
     express.urlencoded({
-        extend: true,
+        extended: true,
     })
 );
 
@@ -40,7 +41,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-    res.statues(error.status || 500).json({
+    res.status(error.status || 500).json({
         error: {
             message: error.message,
             status: error.status

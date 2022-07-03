@@ -19,4 +19,4 @@ routes.get('/profile', (req, res) => {
     });
 });
 
-module.export = routes;
+module.exports = routes;

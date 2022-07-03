@@ -6,11 +6,24 @@ const userSchema = mongoose.Schema({
     firstName: {
         type: String
     },
-    lastName
-    Addresscity
-    this.state.zip
-    email
-    password
+    lastName: {
+        type: STring
+    },
+    address: {
+        type: String
+    },
+    city: {
+        type: String
+    },
+    state: {
+        type: Sting
+    },
+    email: {
+        type: String
+    },
+    password: {
+        type: String
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);

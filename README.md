@@ -1,3 +1,7 @@
+# To run:
+1. npm i
+2. npm start
+
 # Change Log
 
 ### First Commit

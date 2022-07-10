@@ -6,12 +6,9 @@ const User = require('../model/user')
 const { findUser, saveUser } = require('../../db/db')
 
 routes.post('/signup', (req, res) => {
-    // findUser by email address {email: email}
-    // if user exists, return 409 message user exists
-
     findUser({email: req.body.email})
     .then(result => {
-        //console.log(result)
+        console.log(result)
         if(result.length > 0) {
             return res.status(409).json({ message: "Email already exists"})
         } else {
@@ -45,43 +42,25 @@ routes.post('/signup', (req, res) => {
 });
 
 routes.post('/login', (req, res) => {
-    // findUser
-    // if user not found then return 401 message Authorization failed
-    // else
-    // findUser({email: req.body.email})
-    // .then( result => {
-
-    
-    // if( req.body.email == result.email) {
-    //     res.status(401).json({ message: "Email does not exist" })
-    // } else {
-        bcrypt.compare(req.body.password, req.body.hash, (err, result) => {
-            if(err) return res.status(501).json({ error: {message: err.message} })
-            if(result) {
-                res.status(200).json({
-                    message: "Authentication Successful",
-                    result: result,
-                    name: req.body.firstName,
-                })
-            } else {
-                res.status(401).json({ message: "Authentication Failed" })
-            }
-        })
-//     }
-// })
-    bcrypt.compare(req.body.password, req.body.hash, (err, result) => {
-        if(err) return res.status(501).json({ error: {message: err.message} })
-        if(result) {
-            res.status(200).json({
-                message: "Authentication Successful",
-                result: result,
-                name: req.body.firstName,
-            })
+    findUser({email: req.body.email})
+    .then(result => {
+        if(result.length < 1) {
+            res.status(401).json({ message: "Email does not exist" })
         } else {
-            res.status(401).json({ message: "Authentication Failed" })
+            bcrypt.compare(req.body.password, req.body.hash, (err, result) => {
+                if(err) return res.status(501).json({ error: {message: err.message} })
+                if(result) {
+                    res.status(200).json({
+                        message: "Authentication Successful",
+                        result: result,
+                        name: req.body.firstName,
+                    })
+                } else {
+                    res.status(401).json({ message: "Authentication Failed" })
+                }
+            })
         }
     })
-    
 });
 
 routes.get('/profile', (req, res) => {

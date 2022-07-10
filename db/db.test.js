@@ -22,6 +22,7 @@ describe("Db Tests", () => {
         expect(user.firstName).toEqual("Bob")
         expect(user.state).toEqual("Popson")
         expect(user.password).toEqual("soda")
+        expect(user.email).not.toEqual("bobberton@upsie.com")
         await disconnect();
     });
 })

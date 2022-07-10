@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { Address } = require('styled-icons/entypo');
 
 const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -7,7 +6,7 @@ const userSchema = mongoose.Schema({
         type: String
     },
     lastName: {
-        type: STring
+        type: String
     },
     address: {
         type: String
@@ -16,7 +15,10 @@ const userSchema = mongoose.Schema({
         type: String
     },
     state: {
-        type: Sting
+        type: String
+    },
+    zip: {
+        type: String
     },
     email: {
         type: String

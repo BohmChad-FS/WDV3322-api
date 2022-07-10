@@ -8,9 +8,9 @@ const connect = async() => {
 }
 
 
-const findUser = async (obj) => {
-    console.log(obj)
-    return await User.findOne(obj).exec();
+const findUser = async ({email}) => {
+    console.log(email)
+    return await User.find({email}).exec();
 };
 
 const saveUser = async (newUser) => {

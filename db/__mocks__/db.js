@@ -7,7 +7,18 @@ const disconnect = async() => {
 }
 
 const findUser = async (obj) => {
-    await User.findOne(obj).exec()
+    // await User.findOne(obj).exec()
+    console.log('Mocked Finder')
+    return Promise.resolve({
+        firstName: "Greg",
+        lastName: "Lenner",
+        address: "2121 Leftovers Lane",
+        city: "Foodcourtia",
+        state: "Buffeton",
+        zip: "00889",
+        email: "gregtheegg@plum.net",
+        password: "hardboiled",
+    });
 };
 
 const saveUser = async (newUser) => {

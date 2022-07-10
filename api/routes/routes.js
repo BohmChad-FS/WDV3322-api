@@ -9,11 +9,38 @@ routes.post('/signup', (req, res) => {
     // findUser by email address {email: email}
     // if user exists, return 409 message user exists
     //save the user
-    
-    // if(req.body.email === findUser(User.email)) {
-    //     res.status(409).json({ message: "Email already exists"})
-    // } else {
-    //     const password = req.body.password;
+    const email = req.body.email;
+    if(req.body.email === findUser({email: email})) {
+        res.status(409).json({ message: "Email already exists"})
+    } else {
+        const password = req.body.password;
+        bcrypt.hash(password, 10, (err, hash) => {
+            if(err) {
+                res.status(500).json({ error: err.message })
+            } else {
+
+                const newUser = new User({
+                    _id: mongoose.Types.ObjectId(),
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    address: req.body.address,
+                    city: req.body.city,
+                    state: req.body.state,
+                    zip: req.body.zip,
+                    email: req.body.email,
+                    password: hash,
+                })
+
+                saveUser(newUser);
+                res.status(201).json({
+                    message: "User Created",
+                    user: newUser
+                })
+            }
+        })
+    }
+
+    // const password = req.body.password;
     //     bcrypt.hash(password, 10, (err, hash) => {
     //         if(err) {
     //             res.status(500).json({ error: err.message })
@@ -38,33 +65,6 @@ routes.post('/signup', (req, res) => {
     //             })
     //         }
     //     })
-    // }
-
-    const password = req.body.password;
-        bcrypt.hash(password, 10, (err, hash) => {
-            if(err) {
-                res.status(500).json({ error: err.message })
-            } else {
-
-                const newUser = new User({
-                    _id: mongoose.Types.ObjectId,
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    address: req.body.address,
-                    city: req.body.city,
-                    state: req.body.state,
-                    zip: req.body.zip,
-                    email: req.body.email,
-                    password: hash,
-                })
-
-                saveUser(newUser);
-                res.status(201).json({
-                    message: "User Created",
-                    user: newUser
-                })
-            }
-        })
 });
 
 routes.post('/login', (req, res) => {
@@ -88,7 +88,6 @@ routes.post('/login', (req, res) => {
     //         }
     //     })
     // }
-
     bcrypt.compare(req.body.password, req.body.hash, (err, result) => {
         if(err) return res.status(501).json({ error: {message: err.message} })
         if(result) {

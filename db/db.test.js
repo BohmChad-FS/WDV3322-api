@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const { Testcafe, Jest } = require('styled-icons/simple-icons');
 const User = require('../api/model/user');
-const { saveUser, connect, disconnect } = require('./db')
+const { connect, findUser, saveUser, disconnect } = require('./db')
 
 jest.mock('./db');
 

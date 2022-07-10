@@ -7,18 +7,19 @@ const connect = async() => {
     await mongoose.connect(process.env.mongoDBURL)
 }
 
-const disconnect = async() => {
-    console.log("Real Disconnect");
-    await mongoose.connection.close();
-}
 
 const findUser = async (obj) => {
-    await User.findOne(obj).exec()
+    await User.findOne(obj).exec();
 };
 
 const saveUser = async (newUser) => {
     console.log('Real User')
     return await newUser.save()
 };
+
+const disconnect = async() => {
+    console.log("Real Disconnect");
+    await mongoose.connection.close();
+}
 
 module.exports = { connect, findUser, saveUser, disconnect };

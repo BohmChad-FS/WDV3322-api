@@ -4,8 +4,12 @@ const { connect, findUser, saveUser, disconnect } = require('./db')
 
 jest.mock('./db');
 
+beforeEach(async () => {
+    await connect();
+})
+
 describe("Db Tests", () => {
-    test("As a user I want to save a user to MongoDB", async() => {
+    test("Creating a new user and making sure info is there.", async() => {
         const newUser = new User({
             _id: mongoose.Types.ObjectId,
             firstName: "Bob",
@@ -17,16 +21,26 @@ describe("Db Tests", () => {
             email: "fullerbob@pop.com",
             password: "soda",
         })
-        await connect();
+        // await connect();
         const user = await saveUser(newUser);
         expect(user.firstName).toEqual("Bob")
         expect(user.state).toEqual("Popson")
         expect(user.password).toEqual("soda")
         expect(user.email).not.toEqual("bobberton@upsie.com")
-        await disconnect();
+        // await disconnect();
     });
 
-    test("", () => {
-        
+    test("Finding an existing user", () => {
+        findUser({firstName: "Greg"})
+        .then(result => {
+            expect(result.firstName).toEqual("Greg")
+            expect(result.zip).toEqual('00889')
+            expect(result.password).toEqual("hardboiled")
+            expect(result.lastName).not.toEqual("McGreggor")
+        })
     })
+})
+
+afterEach(async () => {
+    await disconnect();
 })

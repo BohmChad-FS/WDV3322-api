@@ -25,4 +25,8 @@ describe("Db Tests", () => {
         expect(user.email).not.toEqual("bobberton@upsie.com")
         await disconnect();
     });
+
+    test("", () => {
+        
+    })
 })

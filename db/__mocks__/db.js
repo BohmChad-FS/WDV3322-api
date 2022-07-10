@@ -17,8 +17,8 @@ const findUser = async (obj) => {
         state: "Buffeton",
         zip: "00889",
         email: "gregtheegg@plum.net",
-        password: "hardboiled"
-    })
+        password: "hardboiled",
+    });
 };
 
 const saveUser = async (newUser) => {

@@ -31,3 +31,4 @@
 1. Configued db.js.
 2. Not saving to database. // Fixed issure, was missing () after ObjectId.
 3. Coded findUser and saveUser. Problem with findUser not working.
+4. Coded Jest tests for the API.

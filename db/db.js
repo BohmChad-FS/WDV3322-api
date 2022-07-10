@@ -9,7 +9,8 @@ const connect = async() => {
 
 
 const findUser = async (obj) => {
-    await User.findOne(obj).exec();
+    console.log(obj)
+    return await User.findOne(obj).exec();
 };
 
 const saveUser = async (newUser) => {

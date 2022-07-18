@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken')
 routes.post('/signup', (req, res) => {
     findUser({email: req.body.email})
     .then(result => {
-        //console.log(result)
+        console.log(result)
         if(result.length > 0) {
             return res.status(409).json({ message: "Email already exists"})
         } else {
@@ -57,18 +57,16 @@ routes.post('/login', (req, res) => {
         if(result.length < 1) {
             res.status(401).json({ message: "Email does not exist" })
         } else {
-            bcrypt.compare(req.body.password, result.password, (err, result) => {
-                // console.log(res.email)
-                //console.log(result)
-                console.log(req.body.password)
-                console.log(result)
-                const token = jwt.sign({email: req.email, id: User._id}, process.env.jwt_key)
+            const user = result[0]
+            bcrypt.compare(req.body.password, user.password, (err, result) => {
+                const token = jwt.sign({email: user.email, id: user._id}, process.env.jwt_key)
+                console.log(token)
                 if(err) return res.status(501).json({ error: {message: err.message} })
                 if(result) {
                     res.status(200).json({
                         message: "Authentication Successful",
                         result: result,
-                        name: req.body.firstName,
+                        name: user.firstName,
                         token: token
                     })
                 } else {
@@ -81,7 +79,7 @@ routes.post('/login', (req, res) => {
 
 routes.get('/profile', checkAuth, (req, res, next) => {
     res.status(200).json({
-        message: decoded
+        message: req.userData
     });
 });
 

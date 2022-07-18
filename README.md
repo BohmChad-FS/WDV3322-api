@@ -32,3 +32,7 @@
 2. Not saving to database. // Fixed issure, was missing () after ObjectId.
 3. Coded findUser and saveUser. Problem with findUser not working.
 4. Coded Jest tests for the API.
+
+### Sixth Commit
+1. Added in JWT.
+2. Added in authorization checks. // Wasn't working, but is now fixed and working correctly.

@@ -11,7 +11,7 @@ beforeEach(async () => {
 describe("Db Tests", () => {
     test("Creating a new user and making sure info is there.", async() => {
         const newUser = new User({
-            _id: mongoose.Types.ObjectId,
+            _id: mongoose.Types.ObjectId(),
             firstName: "Bob",
             lastName: "Fuller",
             address: "5544 New Road",

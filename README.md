@@ -36,3 +36,8 @@
 ### Sixth Commit
 1. Added in JWT.
 2. Added in authorization checks. // Wasn't working, but is now fixed and working correctly.
+
+### Seventh Commit
+1. Cloned front-end repo.
+2. Tested front-end use with the back-end.
+3. Had to restart both to get it to work correctly.

@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken')
 routes.post('/signup', (req, res) => {
     findUser({email: req.body.email})
     .then(result => {
-        console.log(result)
+        //console.log(result)
         if(result.length > 0) {
             return res.status(409).json({ message: "Email already exists"})
         } else {
@@ -35,7 +35,16 @@ routes.post('/signup', (req, res) => {
                     saveUser(newUser);
                     res.status(201).json({
                         message: "User Created",
-                        user: newUser
+                        user: {
+                            firstName: newUser.firstName,
+                            lastName: newUser.lastName,
+                            address: newUser.address,
+                            city: newUser.city,
+                            state: newUser.state,
+                            zip: newUser.zip,
+                            email: newUser.email,
+                            password: req.body.password
+                        }
                     })
                 }
             })
@@ -60,7 +69,7 @@ routes.post('/login', (req, res) => {
             const user = result[0]
             bcrypt.compare(req.body.password, user.password, (err, result) => {
                 const token = jwt.sign({email: user.email, id: user._id}, process.env.jwt_key)
-                console.log(token)
+                //console.log(token)
                 if(err) return res.status(501).json({ error: {message: err.message} })
                 if(result) {
                     res.status(200).json({

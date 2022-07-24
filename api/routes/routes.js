@@ -7,6 +7,50 @@ const { findUser, saveUser } = require('../../db/db')
 const checkAuth = require('../../auth/checkAuth')
 const jwt = require('jsonwebtoken')
 
+/**
+ * @swagger
+ * tags:
+ *  name: User Signup
+ *  description: This is for the user to signup
+ * /users/signup:
+ *  post:
+ *          tags: [User Signup]
+ *          requestBody:
+ *                  required: true
+ *                  content:
+ *                      application/json:
+ *                              schema:
+ *                                      type: object
+ *                                      properties:
+ *                                              firstName:
+ *                                                      type: string
+ *                                                      default: Rando
+ *                                              lastName:
+ *                                                      type: string
+ *                                                      default: Bambo
+ *                                              address:
+ *                                                      type: string
+ *                                                      default: 000 New Lane
+ *                                              city:
+ *                                                      type: string
+ *                                                      default: Coldsville
+ *                                              state:
+ *                                                      type: string
+ *                                                      default: Antartica
+ *                                              zip:
+ *                                                      type: string
+ *                                                      default: 17171
+ *                                              email:
+ *                                                      type: string
+ *                                                      default: rando@bambo.com
+ *                                              password:
+ *                                                      type: string
+ *                                                      default: Iceman33
+ *          responses:
+ *              default:
+ *                      description: User successfully signed up
+*/
+
 routes.post('/signup', (req, res) => {
     findUser({email: req.body.email})
     .then(result => {
@@ -60,6 +104,32 @@ routes.post('/signup', (req, res) => {
     })
 });
 
+/**
+ * @swagger
+ * tags:
+ *  name: User Login
+ *  description: This is for the user to login
+ * /users/login:
+ *  post:
+ *          tags: [User Login]
+ *          requestBody:
+ *                  required: true
+ *                  content:
+ *                          application/json:
+ *                                  schema:
+ *                                          type: object
+ *                                          properties:
+ *                                                  email:
+ *                                                          type: string
+ *                                                          default: rando@bambo.com
+ *                                                  password:
+ *                                                          type: string
+ *                                                          default: Iceman33
+ *          responses:
+ *              default:
+ *                      description: User successfully logged in
+ */
+
 routes.post('/login', (req, res) => {
     findUser({email: req.body.email})
     .then(result => {
@@ -68,7 +138,7 @@ routes.post('/login', (req, res) => {
         } else {
             const user = result[0]
             bcrypt.compare(req.body.password, user.password, (err, result) => {
-                const token = jwt.sign({email: user.email, id: user._id}, process.env.jwt_key)
+                const token = jwt.sign({email: user.email, id: user._id, name: user.firstName}, process.env.jwt_key)
                 //console.log(token)
                 if(err) return res.status(501).json({ error: {message: err.message} })
                 if(result) {
@@ -85,6 +155,21 @@ routes.post('/login', (req, res) => {
         }
     })
 });
+
+/**
+ * @swagger
+ * tags:
+ *  name: User Profile
+ *  description: This is for a users profile
+ * /users/profile:
+ *  get:
+ *          tags: [User Profile]
+ *          security:
+ *                  - bearerAuth: []
+ *          responses:
+ *              default:
+ *                      description: Viewing useres profile page
+ */
 
 routes.get('/profile', checkAuth, (req, res, next) => {
     res.status(200).json({

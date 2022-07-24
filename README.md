@@ -41,3 +41,8 @@
 1. Cloned front-end repo.
 2. Tested front-end use with the back-end.
 3. Had to restart both to get it to work correctly.
+
+### Eigth Commit
+1. Added Swagger-JSDoc and Swagger-US-Express.
+2. Got Sign up and Login coded for swagger.
+3. Trouble with coding Profile for swagger. // Fixed, had security in the wrong spot in comments.
